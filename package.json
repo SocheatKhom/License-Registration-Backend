@@ -7,10 +7,12 @@
   "types": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "prisma skills sync || exit 0",
-    "contract:emit": "prisma contract emit",
     "dev": "nodemon src/server.js",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "db:migrate": "node src/migrations/runner.js up",
+    "db:migrate:undo": "node src/migrations/runner.js down",
+    "db:migrate:status": "node src/migrations/runner.js status",
+    "db:seed": "node src/seeders/seed-super-admin.js"
   },
   "keywords": [],
   "author": "",
@@ -27,7 +29,8 @@
     "multer": "^2.4.0",
     "pg": "^8.23.1",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.37.8"
+    "sequelize": "^6.37.8",
+    "umzug": "^3.8.3"
   },
   "devDependencies": {
     "@types/node": "^26.6.4"
