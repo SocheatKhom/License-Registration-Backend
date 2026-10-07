@@ -1,4 +1,4 @@
-import AuditLog from '../models/audit-log.model.js';
+import { AuditLog, User } from '../models/index.js';
 
 class AuditLogRepository {
   /**
@@ -11,11 +11,39 @@ class AuditLogRepository {
   }
 
   /**
+   * Find audit log by ID
+   * @param {string} id
+   */
+  async findById(id) {
+    return AuditLog.findByPk(id, {
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: ['id', 'name', 'email', 'role'],
+        },
+      ],
+    });
+  }
+
+  /**
    * Find audit logs with pagination and filters
    * @param {object} options
    */
-  async findAndCountAll(options = {}) {
-    return AuditLog.findAndCountAll(options);
+  async findAndCountAll({ where = {}, limit = 20, offset = 0, order = [['created_at', 'DESC']] } = {}) {
+    return AuditLog.findAndCountAll({
+      where,
+      limit,
+      offset,
+      order,
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: ['id', 'name', 'email', 'role'],
+        },
+      ],
+    });
   }
 
   /**
@@ -29,6 +57,13 @@ class AuditLogRepository {
         entity_type: entityType,
         entity_id: entityId,
       },
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: ['id', 'name', 'email', 'role'],
+        },
+      ],
       order: [['created_at', 'DESC']],
     });
   }
