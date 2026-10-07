@@ -13,8 +13,11 @@ async function startServer() {
     await sequelize.authenticate();
     console.log('PostgreSQL connected successfully with Sequelize!');
 
-    await sequelize.sync();
-    console.log('Models synchronized.');
+    // In production, migrations should be run via npm run db:migrate (docs/03-database-design.md)
+    if (process.env.NODE_ENV !== 'production') {
+      await sequelize.sync();
+      console.log('Models synchronized.');
+    }
 
     // Ensure baseline super admin is present
     await seedSuperAdmin();
