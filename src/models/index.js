@@ -6,6 +6,7 @@ import MediaOutlet from './media-outlet.model.js';
 import Application from './application.model.js';
 import Licensee from './licensee.model.js';
 import ApplicationStatusHistory from './application-status-history.model.js';
+import ApplicationDocument from './application-document.model.js';
 
 // --- Associations ---
 
@@ -34,6 +35,10 @@ Application.hasMany(ApplicationStatusHistory, { foreignKey: 'application_id', as
 ApplicationStatusHistory.belongsTo(Application, { foreignKey: 'application_id', as: 'application' });
 ApplicationStatusHistory.belongsTo(User, { foreignKey: 'changed_by', as: 'changedByUser' });
 
+// Application <-> ApplicationDocument (1:Many)
+Application.hasMany(ApplicationDocument, { foreignKey: 'application_id', as: 'documents' });
+ApplicationDocument.belongsTo(Application, { foreignKey: 'application_id', as: 'application' });
+
 const db = {
   sequelize,
   User,
@@ -43,6 +48,7 @@ const db = {
   Application,
   Licensee,
   ApplicationStatusHistory,
+  ApplicationDocument,
 };
 
 export {
@@ -53,6 +59,7 @@ export {
   Application,
   Licensee,
   ApplicationStatusHistory,
+  ApplicationDocument,
   sequelize,
 };
 
