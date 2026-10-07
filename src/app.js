@@ -1,4 +1,5 @@
 import express from 'express';
+import './models/index.js';
 import cors from 'cors';
 import helmet from 'helmet';
 import apiRouter from './routes/index.js';
