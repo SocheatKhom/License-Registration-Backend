@@ -1,8 +1,10 @@
 import dotenv from 'dotenv';
-import app from './app.js'; // Note: In ES6 Node, file extensions like .js are required
-import sequelize from './config/database.js';
-
 dotenv.config();
+
+import app from './app.js';
+import sequelize from './config/database.js';
+import './models/index.js';
+import { seedSuperAdmin } from './seeders/seed-super-admin.js';
 
 const PORT = process.env.PORT || 5000;
 
@@ -13,6 +15,9 @@ async function startServer() {
 
     await sequelize.sync();
     console.log('Models synchronized.');
+
+    // Ensure baseline super admin is present
+    await seedSuperAdmin();
 
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);

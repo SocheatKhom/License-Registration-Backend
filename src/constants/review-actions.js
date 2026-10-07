@@ -1,0 +1,7 @@
+export const REVIEW_ACTIONS = Object.freeze({
+  APPROVE: 'APPROVE',
+  REJECT: 'REJECT',
+  REQUEST_INFORMATION: 'REQUEST_INFORMATION',
+});
+
+export const REVIEW_ACTION_LIST = Object.values(REVIEW_ACTIONS);
