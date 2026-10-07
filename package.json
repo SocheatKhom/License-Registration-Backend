@@ -1,15 +1,29 @@
 {
   "name": "press-registration-backend",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "types": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "prisma skills sync || exit 0",
+    "contract:emit": "prisma contract emit",
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.2.1"
+    "dotenv": "^18.0.6",
+    "express": "^5.2.1",
+    "express-async-handler": "^1.2.0",
+    "pg": "^8.23.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.8"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4"
   }
 }
