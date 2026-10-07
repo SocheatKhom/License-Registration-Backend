@@ -33,6 +33,16 @@ class UserRepository {
     if (!user) return null;
     return user.update(updateData, options);
   }
+
+  async findAndCountAll({ where = {}, limit = 20, offset = 0, order = [['created_at', 'DESC']] } = {}) {
+    return User.findAndCountAll({
+      where,
+      limit,
+      offset,
+      order,
+      attributes: { exclude: ['password_hash'] },
+    });
+  }
 }
 
 export default new UserRepository();
