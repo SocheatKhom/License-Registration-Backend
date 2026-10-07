@@ -7,6 +7,8 @@ import Application from './application.model.js';
 import Licensee from './licensee.model.js';
 import ApplicationStatusHistory from './application-status-history.model.js';
 import ApplicationDocument from './application-document.model.js';
+import Review from './review.model.js';
+import License from './license.model.js';
 
 // --- Associations ---
 
@@ -39,6 +41,18 @@ ApplicationStatusHistory.belongsTo(User, { foreignKey: 'changed_by', as: 'change
 Application.hasMany(ApplicationDocument, { foreignKey: 'application_id', as: 'documents' });
 ApplicationDocument.belongsTo(Application, { foreignKey: 'application_id', as: 'application' });
 
+// Application <-> Review (1:Many)
+Application.hasMany(Review, { foreignKey: 'application_id', as: 'reviews' });
+Review.belongsTo(Application, { foreignKey: 'application_id', as: 'application' });
+
+// User <-> Review (1:Many)
+User.hasMany(Review, { foreignKey: 'reviewer_id', as: 'reviews' });
+Review.belongsTo(User, { foreignKey: 'reviewer_id', as: 'reviewer' });
+
+// Application <-> License (1:1)
+Application.hasOne(License, { foreignKey: 'application_id', as: 'license' });
+License.belongsTo(Application, { foreignKey: 'application_id', as: 'application' });
+
 const db = {
   sequelize,
   User,
@@ -49,6 +63,8 @@ const db = {
   Licensee,
   ApplicationStatusHistory,
   ApplicationDocument,
+  Review,
+  License,
 };
 
 export {
@@ -60,6 +76,8 @@ export {
   Licensee,
   ApplicationStatusHistory,
   ApplicationDocument,
+  Review,
+  License,
   sequelize,
 };
 
