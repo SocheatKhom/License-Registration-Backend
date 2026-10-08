@@ -3,6 +3,7 @@ import {
   MediaOutlet,
   Licensee,
   ApplicationStatusHistory,
+  Review,
   User,
 } from '../models/index.js';
 
@@ -37,6 +38,11 @@ class ApplicationRepository {
           as: 'statusHistories',
           include: [{ model: User, as: 'changedByUser', attributes: ['id', 'name', 'email', 'role'] }],
           order: [['created_at', 'ASC']],
+        },
+        {
+          model: Review,
+          as: 'reviews',
+          include: [{ model: User, as: 'reviewer', attributes: ['id', 'name', 'email', 'role'] }],
         },
         { model: User, as: 'user', attributes: ['id', 'name', 'email', 'role'] },
       ],

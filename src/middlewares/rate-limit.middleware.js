@@ -2,7 +2,7 @@ import rateLimit from 'express-rate-limit';
 import { sendError } from '../utils/response.js';
 
 const WINDOW_MS = parseInt(process.env.RATE_LIMIT_WINDOW_MS, 10) || 15 * 60 * 1000; // 15 minutes
-const MAX_REQUESTS = parseInt(process.env.RATE_LIMIT_MAX_REQUESTS, 10) || 100;
+const MAX_REQUESTS = parseInt(process.env.RATE_LIMIT_MAX_REQUESTS, 10) || (process.env.NODE_ENV === 'development' ? 10000 : 100);
 
 /**
  * General API Rate Limiter
